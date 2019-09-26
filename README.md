@@ -7,7 +7,7 @@ This is a simple console application without external libraries (It's a lie, onl
 
 It is still at an early stage and errors are expected to be fixed. In addition to adding additional features.
 
-Download Links: 
+Download Links: [Releases](https://github.com/Ushiosan23/CodeCounter/releases) 
 
 ## Building:
 
