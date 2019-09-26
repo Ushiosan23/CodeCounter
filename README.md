@@ -1,4 +1,4 @@
-# CodeCounter
+# CodeCounter :hash:
 Get the programming languages of your project. How many lines and how many blanks it has.
 
 ___
@@ -11,10 +11,10 @@ Download Links:
 
 ## Building:
 
-**If you want to build your own program, you have total freedom to do so.** :like:
+**If you want to build your own program, you have total freedom to do so.** :+1:
 
 ### Dependencies:
 - It is mentioned above that it does not have dependencies on external libraries, but if one is used that is only a help for the developer:
     - The dependence is are:
         - Java annotations of Jetbrains.
-        - That's it :blink:
+        - That's it :wink:
