@@ -40,7 +40,7 @@ object Program {
 	@JvmStatic
 	fun main(args: Array<String>) {
 		configuration = XMLConfiguration(configurationFile)
-		appName = configuration.getTyped<String>("AppName")!!
+		appName = configuration.getTyped<String>("app_name")!!
 		primaryFrame = PrimaryFrame(appName)
 		
 		primaryFrame.isVisible = true
