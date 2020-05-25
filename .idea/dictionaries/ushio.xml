@@ -2,6 +2,10 @@
   <dictionary name="ushio">
     <words>
       <w>codecounter</w>
+      <w>gitmodules</w>
+      <w>htaccess</w>
+      <w>nbproject</w>
+      <w>vscode</w>
     </words>
   </dictionary>
 </component>
