@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<configuration>
-    <!-- base config -->
-    <item name="AppName" value="Code Counter"/>
-
-    <!-- version -->
-    <item name="AppVersion" value="version.version" type="fx.codecounter.configuration.Version"/>
-
-    <!-- window config -->
-    <item name="width" value="1000" type="int"/>
-    <item name="height" value="600" type="int"/>
-    <item name="center" value="true" type="boolean"/>
-
-</configuration>
+<root>
+	<!-- base config -->
+	<item name="app_name" value="Code Counter"/>
+	
+	<!-- version -->
+	<item name="app_version" value="version.version" type="fx.codecounter.configuration.Version"/>
+	
+	<!-- window config -->
+	<item name="width" value="1000" type="int"/>
+	<item name="height" value="600" type="int"/>
+	<item name="center" value="true" type="boolean"/>
+	
+	<!-- ignore directories and files -->
+	<item name="ignore_config" value="ignore.xml" type="fx.codecounter.configuration.XMLIgnoreConfiguration"/>
+</root>
