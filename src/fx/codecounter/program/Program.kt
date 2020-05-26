@@ -33,6 +33,12 @@ object Program {
 	lateinit var primaryFrame: PrimaryFrame
 	
 	/**
+	 * current open project
+	 */
+	@JvmStatic
+	var currentProject: Any? = null
+	
+	/**
 	 * Main entry point
 	 *
 	 * @param args program arguments
