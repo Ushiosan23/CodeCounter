@@ -1,12 +1,14 @@
 package fx.codecounter.ui
 
+import fx.codecounter.data.LanguageResult
 import fx.codecounter.program.Program
+import fx.codecounter.ui.menu.BaseAction
+import fx.codecounter.ui.menu.MainMenu
 import java.awt.BorderLayout
 import java.awt.Dimension
-import javax.swing.JDialog
-import javax.swing.JPanel
-import javax.swing.JTable
-import javax.swing.WindowConstants
+import java.awt.FlowLayout
+import javax.swing.*
+import javax.swing.table.DefaultTableModel
 
 /**
  * Primary window frame.
@@ -33,12 +35,28 @@ class PrimaryFrame(title: String) : JDialog(null, title, ModalityType.APPLICATIO
 	/**
 	 * Content table
 	 */
-	private lateinit var contentTable: JTable
+	private val contentTable: JTable = JTable()
+	
+	/**
+	 * Bottom panel used to locale buttons
+	 */
+	private val bottomPanel = JPanel(FlowLayout(FlowLayout.RIGHT, 10, 10))
+	
+	/**
+	 * Save button
+	 */
+	private val buttonSave = JButton(BaseAction("Save"))
+	
+	/**
+	 * Clear button
+	 */
+	private val buttonClear = JButton(BaseAction("Clear"))
 	
 	/**
 	 * initialize object.
 	 */
 	init {
+		jMenuBar = MainMenu()
 		defaultCloseOperation = WindowConstants.DISPOSE_ON_CLOSE
 		
 		cWidth = Program.configuration.getTyped<Int>("width") ?: cWidth
@@ -47,6 +65,7 @@ class PrimaryFrame(title: String) : JDialog(null, title, ModalityType.APPLICATIO
 		
 		// set configuration
 		initializeConfiguration()
+		initializeComponents()
 	}
 	
 	/**
@@ -65,7 +84,32 @@ class PrimaryFrame(title: String) : JDialog(null, title, ModalityType.APPLICATIO
 	 * Initialize all components
 	 */
 	private fun initializeComponents() {
-	
+		val scroll = JScrollPane(contentTable)
+		contentTable.model = getTableModel(LanguageResult.getColumnsModel(), arrayOf())
+		
+		// Add buttons to panel
+		bottomPanel.add(buttonSave)
+		bottomPanel.add(buttonClear)
+		
+		// Add panels to contentPane
+		contentPane.add(scroll, BorderLayout.CENTER)
+		contentPane.add(bottomPanel, BorderLayout.SOUTH)
 	}
 	
+	/**
+	 * Get data table data model
+	 *
+	 * @param columns table column names
+	 * @param data table data
+	 */
+	private fun getTableModel(columns: Array<String>, data: Array<Array<Any?>>) = object : DefaultTableModel(data, columns) {
+		
+		/**
+		 * Cannot edit table content
+		 */
+		override fun isCellEditable(row: Int, column: Int): Boolean {
+			return false
+		}
+		
+	}
 }
