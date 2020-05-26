@@ -17,10 +17,10 @@ data class Comment(
 	/**
 	 * Long start comment regex
 	 */
-	val longCommentStart: String,
+	val longCommentStart: String?,
 	
 	/**
 	 * Long end comment regex
 	 */
-	val longCommentEnd: String
+	val longCommentEnd: String?
 )
