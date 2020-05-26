@@ -71,4 +71,25 @@ data class LanguageResult(
 		total = code + empty + comments
 	}
 	
+	/**
+	 * Companion object
+	 */
+	companion object {
+		
+		/**
+		 * Get table model to language results
+		 *
+		 * @return [Array] with columns model
+		 */
+		fun getColumnsModel(): Array<String> {
+			return arrayOf(
+				"Language",
+				"Code",
+				"Empty",
+				"Comments",
+				"Total"
+			)
+		}
+		
+	}
 }
