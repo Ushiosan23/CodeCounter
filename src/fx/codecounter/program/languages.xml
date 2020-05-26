@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <root>
+	
+	<!-- java -->
+	<item name="Java" extensions="java, jsp" comment="\\/{2}.*">
+		<comment-start>\\/\\*.*</comment-start>
+		<comment-end>.*\\*\\/</comment-end>
+	</item>
+	
+	<!-- kotlin -->
+	<item name="Kotlin" extensions="kt, kts" comment="\\/{2}.*">
+		<comment-start>\\/\\*.*</comment-start>
+		<comment-end>.*\\*\\/</comment-end>
+	</item>
 
 </root>

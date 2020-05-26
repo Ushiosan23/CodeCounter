@@ -13,4 +13,5 @@
 	
 	<!-- ignore directories and files -->
 	<item name="ignore_config" value="ignore.xml" type="fx.codecounter.configuration.XMLIgnoreConfiguration"/>
+	<item name="language_config" value="languages.xml" type="fx.codecounter.configuration.XMLLanguageConfiguration"/>
 </root>
