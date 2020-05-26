@@ -114,6 +114,7 @@ class XMLConfiguration(location: InputStream) : XMLBaseConfiguration(location) {
 			Boolean::class.java.name -> configurationData[name] = value?.toBoolean()
 			Version::class.java.name -> configurationData[name] = Version(Program::class.java.getResource(value))
 			XMLIgnoreConfiguration::class.java.name -> configurationData[name] = XMLIgnoreConfiguration(Program::class.java.getResource(value))
+			XMLLanguageConfiguration::class.java.name -> configurationData[name] = XMLLanguageConfiguration(Program::class.java.getResource(value))
 		}
 	}
 	
