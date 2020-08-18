@@ -7,7 +7,9 @@ import kotlin.NoSuchElementException
 import kotlin.collections.HashSet
 
 /**
- * Class used to parse .ini files
+ * Class used to parse .ini files.
+ *
+ * Based of [Commons library](https://github.com/hindol/commons)
  */
 class JIni {
 	
