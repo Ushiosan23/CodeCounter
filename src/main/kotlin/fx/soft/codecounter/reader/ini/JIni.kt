@@ -19,6 +19,11 @@ class JIni {
 	private val mSections: MutableMap<String, Section> = mutableMapOf()
 	
 	/**
+	 * Set value case sensitive
+	 */
+	var loadCaseSensitive: Boolean = false
+	
+	/**
 	 * Load file content
 	 *
 	 * @param stream File reader
@@ -27,8 +32,10 @@ class JIni {
 		val reader = InputStreamReader(stream)
 		
 		// Set default section
-		var sectionKey = DEFAULT_SECTION_KEY
+		var sectionKey = transformSectionKey(DEFAULT_SECTION_KEY)
 		mSections[sectionKey] = Section()
+		mSections[sectionKey]!!.sectionCaseSensitive = loadCaseSensitive
+		
 		// Iterate all file lines
 		reader.forEachLine { line ->
 			// Ignore comments
@@ -37,12 +44,13 @@ class JIni {
 			
 			// Check if line is section
 			if (isSectionLine(line)) {
-				sectionKey = getSectionKey(line)
+				sectionKey = transformSectionKey(getSectionKey(line))
 				
 				if (mSections.containsKey(sectionKey))
 					return@forEachLine
 				
 				val section = Section()
+				section.sectionCaseSensitive = loadCaseSensitive
 				section.mDefaultSection = section
 				
 				mSections[sectionKey] = section
@@ -58,8 +66,10 @@ class JIni {
 	/**
 	 * Get all section keys
 	 */
-	fun getSectionKeys(): Set<String> =
+	fun getSectionKeys(includeDefault: Boolean = true): Set<String> = if (includeDefault)
 		Collections.unmodifiableSet(mSections.keys)
+	else
+		getSectionKeys(true).filter { !it.equals(DEFAULT_SECTION_KEY, true) }.toSet()
 	
 	/**
 	 * Check if ini file has section
@@ -104,10 +114,21 @@ class JIni {
 		getSectionOrNull(sectionKey)
 	
 	/**
+	 * Transform section key to lower case
+	 *
+	 * @param sectionKey Target section to transform
+	 * @return [String] transform section key
+	 */
+	private fun transformSectionKey(sectionKey: String): String = if (!loadCaseSensitive)
+		sectionKey.trim().toLowerCase()
+	else
+		sectionKey.trim()
+	
+	/**
 	 * Get format object
 	 */
 	override fun toString(): String {
-		return "${this::class.java.canonicalName}: $mSections"
+		return "${this::class.java.simpleName}: $mSections"
 	}
 	
 	/**
@@ -125,6 +146,11 @@ class JIni {
 		 * Section default section
 		 */
 		lateinit var mDefaultSection: Section
+		
+		/**
+		 * Section content case sensitive
+		 */
+		var sectionCaseSensitive: Boolean = false
 		
 		/**
 		 * Initialize object
@@ -200,7 +226,7 @@ class JIni {
 			if (result.isEmpty())
 				return emptyList()
 			
-			return result.split(separator).toList()
+			return result.split(separator).map { it.trim() }.toList()
 		}
 		
 		/**
@@ -245,6 +271,17 @@ class JIni {
 		}
 		
 		/**
+		 * Operator get. This method is called like array called Section[key]
+		 *
+		 * @param key Target property name
+		 * @return [String] Result property or `null`
+		 */
+		operator fun get(key: String, default: String? = null): String? = if (containsKeys(key))
+			getString(key)
+		else
+			default
+		
+		/**
 		 * Put a key in current section
 		 *
 		 * @param key Property key name
@@ -255,31 +292,18 @@ class JIni {
 			mProperties.put(transformKey(key), value)
 		
 		/**
+		 * Transform key to target format
+		 */
+		private fun transformKey(key: String): String = if (!sectionCaseSensitive)
+			key.trim().toLowerCase()
+		else
+			key.trim()
+		
+		/**
 		 * Get section string format
 		 */
 		override fun toString(): String {
 			return mProperties.toString()
-		}
-		
-		/**
-		 * Companion Section object
-		 */
-		companion object {
-			
-			/**
-			 * Case sensitive property checker
-			 */
-			@JvmStatic
-			private val KEY_CASE_SENSITIVE: Boolean = false
-			
-			/**
-			 * Transform key to target format
-			 */
-			private fun transformKey(key: String): String = if (KEY_CASE_SENSITIVE)
-				key
-			else
-				key.toLowerCase()
-			
 		}
 		
 	}
@@ -305,26 +329,7 @@ class JIni {
 		 * Save ini file property default key
 		 */
 		@JvmStatic
-		private val DEFAULT_SECTION_KEY: String = transformSectionKey("default")
-		
-		/**
-		 * Property to manage properties string case
-		 */
-		@JvmStatic
-		private val SECTION_KEY_CASE_SENSITIVE: Boolean = false
-		
-		/**
-		 * Transform section key to lower case
-		 *
-		 * @param sectionKey Target section to transform
-		 * @return [String] transform section key
-		 */
-		@Suppress("SameParameterValue")
-		@JvmStatic
-		private fun transformSectionKey(sectionKey: String): String = if (SECTION_KEY_CASE_SENSITIVE)
-			sectionKey
-		else
-			sectionKey.toLowerCase()
+		private val DEFAULT_SECTION_KEY: String = "Default"
 		
 		/**
 		 * Check if line is comment
@@ -370,7 +375,7 @@ class JIni {
 			if (sectionKey.isEmpty())
 				throw IllegalArgumentException("Section key cannot be empty")
 			
-			return transformSectionKey(sectionKey)
+			return sectionKey
 		}
 		
 	}
