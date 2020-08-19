@@ -1,8 +1,8 @@
 // Plugins section
 plugins {
 	application
-	kotlin("jvm") version "1.3.72"
-	kotlin("plugin.serialization") version "1.3.72"
+	kotlin("jvm") version "1.4.0"
+	kotlin("plugin.serialization") version "1.4.0"
 }
 
 // Global variables
@@ -65,9 +65,9 @@ tasks {
 dependencies {
 	// Kotlin implementations
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	implementation("org.jetbrains.kotlin:kotlin-serialization:1.3.72")
+	implementation("org.jetbrains.kotlin:kotlin-serialization:1.4.0")
 	implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
-	implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.72")
+	implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.0")
 	
 	// Test implementation
 	implementation("junit:junit:4.12")
